@@ -1,18 +1,64 @@
-version: '3.8'
-
+version: '3'
 services:
-  prometheus:
-    image: prom/prometheus:latest
-    container_name: prometheus
-    volumes:
-      - C:\SpringDataRest\prometheus\promotheus.yml:/etc/prometheus/prometheus.yml  # Chemin relatif pour le fichier de configuration
+  postgres:
+    image: postgres
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: springboot
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
     ports:
-      - "9091:9090"  # Port par défaut pour Prometheus
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - spring-data
+
+  voiture-app-backend:
+    image: my_backend_voiture
+    container_name: voiture-app-backend
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - spring-data
+
+  voiture-front-end:
+    image: voiture-app-frontend
+    container_name: voiture-app-frontend
+    ports:
+      - "3000:80"
+    networks:
+      - spring-data
+
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9091:9090"
+    volumes:
+      - C:\SpringDataRest\prometheus\promotheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - voiture-app-backend
+    networks:
+      - spring-data
 
   grafana:
-    image: grafana/grafana:latest
-    container_name: grafana
+    image: grafana/grafana
     ports:
-      - "3001:3000"  # Port par défaut pour Grafana
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - spring-data
+
+volumes:
+  pgdata:
+
+networks:
+  spring-data:

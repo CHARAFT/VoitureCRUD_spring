@@ -1,20 +1,3 @@
-# Step 1: Build React App
-FROM node:18 AS frontend-build
-
-# Set working directory inside the container for the React app
-WORKDIR /app
-
-# Copy the React project files
-COPY src/main/webapp/reactjs/package.json ./
-COPY src/main/webapp/reactjs/package-lock.json ./
-
-# Install dependencies using npm
-RUN npm install
-
-# Copy all React source files and build the React app
-COPY src/main/webapp/reactjs/ ./
-RUN npm run build
-
 # Step 2: Build Spring Boot Application with Maven and Java 21
 FROM maven:3.9.4-eclipse-temurin-21 AS backend-build
 
@@ -24,9 +7,6 @@ WORKDIR /app
 # Copy pom.xml and source code
 COPY pom.xml .
 COPY src ./src
-
-# Copy the built React app to the Spring Boot static resources directory
-COPY --from=frontend-build /app/build/ src/main/resources/static/
 
 # Package the Spring Boot app, including React static files
 RUN mvn clean package -DskipTests
