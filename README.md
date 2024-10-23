@@ -58,13 +58,27 @@ You can configure the following environment variables in the docker-compose.yml 
 *PostgreSQL:
 
 POSTGRES_DB: Database name (default: springboot)
+
 POSTGRES_USER: Username for the database (default: postgres)
+
 POSTGRES_PASSWORD: Password for the database user (default: admin)
 *Backend:
 
 POSTGRES_HOST: Hostname of the PostgreSQL service (default: postgres)
+
 POSTGRES_PORT: Port for PostgreSQL connection (default: 5432)
+
 POSTGRES_USER: Same as above.
+
 POSTGRES_PASSWORD: Same as above.
+ ## Promotheus
+![Alt text](promotheus.png)
+ ## actuator/ health
+![Alt text](actuator.png)
+
+
+
+
+
 
 
