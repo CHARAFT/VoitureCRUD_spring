@@ -42,7 +42,7 @@ services:
     ports:
       - "9091:9090"
     volumes:
-      - C:\SpringDataRest\prometheus\promotheus.yml:/etc/prometheus/prometheus.yml
+      - .\prometheus\promotheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
       - voiture-app-backend
     networks:
