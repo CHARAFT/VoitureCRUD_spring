@@ -75,6 +75,9 @@ POSTGRES_PASSWORD: Same as above.
 ![Alt text](promotheus.png)
  ## actuator/ health
 ![Alt text](actuator.png)
+## gafana
+![Alt text](gafana.png)
+
 
 
 
