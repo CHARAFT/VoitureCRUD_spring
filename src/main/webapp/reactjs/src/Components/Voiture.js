@@ -15,8 +15,8 @@ const Voiture = () => {
         annee: ''
     });
 
-    const navigate = useNavigate(); // Hook for navigation
-    const { id } = useParams(); // Hook to get the ID from URL
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     // Load car data if an ID is provided (edit mode)
     useEffect(() => {
